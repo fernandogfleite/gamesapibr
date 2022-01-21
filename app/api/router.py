@@ -15,3 +15,11 @@ async def get_all_games():
 @router.post('/')
 async def create_game(game: GameIn = Body(...)):
     return await db_manager.create_game(game)
+
+
+@router.delete('/{id}',status_code=204)
+async def delete_game(id: int):
+    game_db = await db_manager.get_game_by_id(id)
+
+    if game_db:
+        await db_manager.delete_game_by_id(id)
